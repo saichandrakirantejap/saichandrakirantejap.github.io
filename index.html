@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sai Chandra — Data Scientist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0a0f;
+      --bg2:       #111118;
+      --bg3:       #1a1a24;
+      --border:    #2a2a3a;
+      --accent:    #6c63ff;
+      --accent2:   #00d9ff;
+      --accent3:   #ff6b6b;
+      --text:      #e8e8f0;
+      --muted:     #7a7a8c;
+      --card:      #14141e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700; font-size: 1rem;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.85rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent2); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.3;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+    }
+    .hero-glow {
+      position: absolute; width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,99,255,0.15) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; color: var(--accent2);
+      border: 1px solid rgba(0,217,255,0.3);
+      padding: 0.3rem 0.8rem; border-radius: 100px;
+      margin-bottom: 1.5rem; letter-spacing: 0.1em;
+    }
+    .hero-tag::before {
+      content: ''; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--accent2);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700; line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-role {
+      font-size: 1.1rem; color: var(--muted);
+      margin-bottom: 1.5rem;
+      font-family: 'Space Mono', monospace;
+    }
+    .hero-bio {
+      font-size: 1.05rem; color: var(--text);
+      max-width: 600px; margin-bottom: 2.5rem;
+      line-height: 1.8; opacity: 0.85;
+    }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.75rem; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 0 20px rgba(108,99,255,0.3);
+    }
+    .btn-primary:hover {
+      background: #7c74ff;
+      box-shadow: 0 0 30px rgba(108,99,255,0.5);
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text); background: transparent;
+    }
+    .btn-outline:hover {
+      border-color: var(--accent2); color: var(--accent2);
+      transform: translateY(-1px);
+    }
+    .hero-stats {
+      display: flex; gap: 3rem; margin-top: 3rem;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--accent2);
+    }
+    .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* ── Section ── */
+    section { padding: 6rem 4rem; }
+    .section-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.2em;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .section-sub {
+      color: var(--muted); font-size: 1rem;
+      max-width: 500px; margin-bottom: 3rem;
+    }
+
+    /* ── About ── */
+    .about { background: var(--bg2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start;
+    }
+    .about-text p {
+      color: var(--muted); line-height: 1.9;
+      margin-bottom: 1.2rem; font-size: 0.97rem;
+    }
+    .about-text p strong { color: var(--text); }
+    .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
+    .timeline-item {
+      display: flex; gap: 1.2rem; align-items: flex-start;
+    }
+    .timeline-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+      margin-top: 0.4rem;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .timeline-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; color: var(--accent2);
+      margin-bottom: 0.2rem;
+    }
+    .timeline-title { font-weight: 600; font-size: 0.9rem; }
+    .timeline-sub { color: var(--muted); font-size: 0.8rem; }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      transition: all 0.2s;
+    }
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(108,99,255,0.1);
+    }
+    .skill-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .skill-category {
+      font-size: 0.75rem; font-weight: 600;
+      color: var(--accent2); text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 0.75rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.72rem; padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      background: rgba(108,99,255,0.1);
+      border: 1px solid rgba(108,99,255,0.2);
+      color: var(--text);
+    }
+
+    /* ── Projects ── */
+    .projects { background: var(--bg2); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem;
+      transition: all 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .project-card:hover {
+      border-color: rgba(108,99,255,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+    .project-card:hover::before { opacity: 1; }
+    .project-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 1rem;
+    }
+    .project-icon { font-size: 1.8rem; }
+    .project-links { display: flex; gap: 0.5rem; }
+    .project-link {
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 8px;
+      border: 1px solid var(--border);
+      color: var(--muted); text-decoration: none;
+      font-size: 0.85rem; transition: all 0.2s;
+    }
+    .project-link:hover { border-color: var(--accent2); color: var(--accent2); }
+    .project-badge {
+      display: inline-block; font-size: 0.65rem;
+      padding: 0.2rem 0.6rem; border-radius: 100px;
+      font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 0.75rem;
+    }
+    .badge-work { background: rgba(108,99,255,0.15); color: var(--accent); border: 1px solid rgba(108,99,255,0.3); }
+    .badge-ml   { background: rgba(255,107,107,0.15); color: var(--accent3); border: 1px solid rgba(255,107,107,0.3); }
+    .badge-dl   { background: rgba(0,217,255,0.1);   color: var(--accent2); border: 1px solid rgba(0,217,255,0.25); }
+    .badge-btec { background: rgba(100,200,100,0.1); color: #6dc46d;         border: 1px solid rgba(100,200,100,0.25); }
+    .project-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .project-desc { color: var(--muted); font-size: 0.87rem; line-height: 1.7; margin-bottom: 1.25rem; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .stack-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* ── Experience ── */
+    .exp-list { display: flex; flex-direction: column; gap: 2rem; }
+    .exp-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 1.5rem; align-items: start;
+      transition: all 0.2s;
+    }
+    .exp-card:hover { border-color: var(--accent); }
+    .exp-logo {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: var(--bg3); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .exp-meta { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.4rem; }
+    .exp-title { font-weight: 700; font-size: 1rem; }
+    .exp-period {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; color: var(--accent2);
+      padding: 0.2rem 0.6rem; border-radius: 100px;
+      background: rgba(0,217,255,0.08); border: 1px solid rgba(0,217,255,0.2);
+    }
+    .exp-company { color: var(--accent); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .exp-points li {
+      font-size: 0.87rem; color: var(--muted);
+      padding-left: 1rem; position: relative; line-height: 1.6;
+    }
+    .exp-points li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--accent); font-size: 0.75rem;
+    }
+
+    /* ── Contact ── */
+    .contact { background: var(--bg2); text-align: center; }
+    .contact-inner { max-width: 600px; margin: 0 auto; }
+    .contact-links {
+      display: flex; justify-content: center;
+      gap: 1rem; margin-top: 2rem; flex-wrap: wrap;
+    }
+    .contact-card {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.9rem 1.5rem; border-radius: 10px;
+      border: 1px solid var(--border);
+      text-decoration: none; color: var(--text);
+      font-size: 0.87rem; font-weight: 500;
+      transition: all 0.2s; background: var(--card);
+    }
+    .contact-card:hover {
+      border-color: var(--accent2); color: var(--accent2);
+      transform: translateY(-2px);
+    }
+    .contact-card span { font-size: 1.1rem; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center; padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted); font-size: 0.8rem;
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* ── Animations ── */
+    .fade-in {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section, .hero { padding: 5rem 1.5rem 3rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .exp-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">sai_chandra.py</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Open to Work · Birmingham, AL</div>
+    <h1>Sai Chandra<br /><span>Kiran Teja Podili</span></h1>
+    <p class="hero-role">// Data Scientist · GenAI · ML Engineer</p>
+    <p class="hero-bio">
+      I build data pipelines and ML systems that work in production.
+      My background spans fraud detection ML at DBS Bank and GenAI/RAG systems
+      at Docusign — I care about the decisions behind the code more than the tools used.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects →</a>
+      <a href="https://linkedin.com/in/saichandrapodili" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+      <a href="https://github.com/saichandrakirantejap" target="_blank" class="btn btn-outline">GitHub ↗</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div>
+        <div class="stat-num">MS</div>
+        <div class="stat-label">Data Science · UAB</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-tag">// 01 · About</div>
+  <h2 class="section-title">Who I Am</h2>
+  <p class="section-sub">A data scientist who focuses on decisions, not just tools.</p>
+  <div class="about-grid fade-in">
+    <div class="about-text">
+      <p>I started as an <strong>Associate Data Scientist at DBS Bank</strong> in Hyderabad, where I built XGBoost fraud detection models from scratch — handling class imbalance with SMOTE, engineering 200+ features in PySpark, and explaining model decisions to compliance teams using SHAP.</p>
+      <p>I then moved to the US to pursue an <strong>MS in Data Science at the University of Alabama at Birmingham</strong>, where my capstone involved building a Deep Convolutional GAN for anime face generation in PyTorch.</p>
+      <p>Most recently I worked at <strong>Docusign</strong> on a multi-agent document processing system — designing the full data layer from Kafka MSK ingestion and semantic chunking to hybrid RAG retrieval, LangGraph agent orchestration, and end-to-end observability via LangSmith and CloudWatch.</p>
+      <p>I care about <strong>why semantic chunking over fixed-size, why hybrid retrieval over dense-only, why tune on precision-recall rather than accuracy</strong> — more than just which tools were used.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div>
+          <div class="timeline-year">2018 – 2022</div>
+          <div class="timeline-title">BTech ECE</div>
+          <div class="timeline-sub">Sastra Deemed University · Thanjavur, India</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div>
+          <div class="timeline-year">2022 – 2023</div>
+          <div class="timeline-title">Associate Data Scientist</div>
+          <div class="timeline-sub">DBS Bank · Hyderabad, India</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div>
+          <div class="timeline-year">2024 – 2025</div>
+          <div class="timeline-title">MS Data Science</div>
+          <div class="timeline-sub">University of Alabama at Birmingham</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div>
+          <div class="timeline-year">2025 – 2026</div>
+          <div class="timeline-title">Data Scientist</div>
+          <div class="timeline-sub">Docusign · Remote, USA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-tag">// 02 · Skills</div>
+  <h2 class="section-title">Technical Stack</h2>
+  <p class="section-sub">Tools I've used in production — nothing added that I can't defend.</p>
+  <div class="skills-grid fade-in">
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-category">ML & Modeling</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span><span class="tag">XGBoost</span>
+        <span class="tag">Scikit-learn</span><span class="tag">SHAP</span>
+        <span class="tag">SMOTE</span><span class="tag">PySpark</span>
+        <span class="tag">Pydantic</span><span class="tag">asyncio</span>
+        <span class="tag">SQL</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔍</div>
+      <div class="skill-category">GenAI & RAG</div>
+      <div class="skill-tags">
+        <span class="tag">LangGraph</span><span class="tag">LangChain</span>
+        <span class="tag">OpenAI GPT-4</span><span class="tag">Pinecone</span>
+        <span class="tag">pgvector</span><span class="tag">BM25</span>
+        <span class="tag">Cohere Rerank</span><span class="tag">Ragas</span>
+        <span class="tag">LangSmith</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">☁️</div>
+      <div class="skill-category">Data & Infra</div>
+      <div class="skill-tags">
+        <span class="tag">AWS S3</span><span class="tag">PostgreSQL</span>
+        <span class="tag">DynamoDB</span><span class="tag">Redis</span>
+        <span class="tag">Kafka MSK</span><span class="tag">MLflow</span>
+        <span class="tag">SageMaker</span><span class="tag">CloudWatch</span>
+        <span class="tag">Docker</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🧠</div>
+      <div class="skill-category">Deep Learning</div>
+      <div class="skill-tags">
+        <span class="tag">PyTorch</span><span class="tag">DCGAN</span>
+        <span class="tag">CNNs</span><span class="tag">Hugging Face</span>
+        <span class="tag">LoRA / PEFT</span><span class="tag">RLHF</span>
+        <span class="tag">vLLM</span><span class="tag">Fine-tuning</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="section-tag">// 03 · Projects</div>
+  <h2 class="section-title">What I've Built</h2>
+  <p class="section-sub">Production systems and research projects across ML, GenAI, and deep learning.</p>
+  <div class="projects-grid fade-in">
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">🤖</div>
+        <div class="project-links">
+          <a href="https://github.com/saichandrakirantejap/multiagent-rag-pipeline" target="_blank" class="project-link">↗</a>
+        </div>
+      </div>
+      <span class="project-badge badge-work">Docusign · 2025–2026</span>
+      <div class="project-title">Multi-Agent RAG Pipeline</div>
+      <div class="project-desc">
+        Two-agent LangGraph system (Planner + Analyst) with hybrid RAG pipeline for legal document processing.
+        Full AWS data layer — Kafka MSK ingestion, PostgreSQL + Pinecone storage, Redis caching,
+        DynamoDB agent checkpointing, MLflow tracking, LangSmith observability.
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">LangGraph</span><span class="stack-tag">LangChain</span>
+        <span class="stack-tag">Pinecone</span><span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">DynamoDB</span><span class="stack-tag">Redis</span>
+        <span class="stack-tag">Kafka MSK</span><span class="stack-tag">MLflow</span>
+        <span class="stack-tag">LangSmith</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">🔐</div>
+        <div class="project-links">
+          <a href="https://github.com/saichandrakirantejap/fraud-detection-xgboost" target="_blank" class="project-link">↗</a>
+        </div>
+      </div>
+      <span class="project-badge badge-ml">DBS Bank · 2022–2023</span>
+      <div class="project-title">XGBoost Fraud Detection</div>
+      <div class="project-desc">
+        Production ML fraud detection on heavily imbalanced transaction data (1:200 fraud ratio).
+        PySpark feature pipeline with velocity, behavioral, and temporal features.
+        Precision-recall threshold tuning and SHAP explainability for compliance teams.
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">XGBoost</span><span class="stack-tag">PySpark</span>
+        <span class="stack-tag">SMOTE</span><span class="stack-tag">SHAP</span>
+        <span class="stack-tag">MLflow</span><span class="stack-tag">SageMaker</span>
+        <span class="stack-tag">Python</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">🎨</div>
+        <div class="project-links">
+          <a href="https://github.com/saichandrakirantejap/anime-face-dcgan" target="_blank" class="project-link">↗</a>
+        </div>
+      </div>
+      <span class="project-badge badge-dl">MS Capstone · UAB 2024–2025</span>
+      <div class="project-title">Anime Face Generation — DCGAN</div>
+      <div class="project-desc">
+        Deep Convolutional GAN trained on 63K anime face images.
+        Generator uses transposed convolutions; Discriminator uses strided CNN with LeakyReLU.
+        Label smoothing and batch normalisation to stabilise adversarial training.
+        Tracked FID score across training epochs.
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">PyTorch</span><span class="stack-tag">DCGAN</span>
+        <span class="stack-tag">NumPy</span><span class="stack-tag">Matplotlib</span>
+        <span class="stack-tag">Google Colab GPU</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon">🎙️</div>
+        <div class="project-links">
+          <a href="https://github.com/saichandrakirantejap/tony-voice-assistant" target="_blank" class="project-link">↗</a>
+        </div>
+      </div>
+      <span class="project-badge badge-btec">BTech Project · 2021–2022</span>
+      <div class="project-title">Tony — Voice Assistant</div>
+      <div class="project-desc">
+        Python voice assistant named Tony, built during final year BTech.
+        Runs on a laptop with a microphone. Handles weather queries,
+        Wikipedia search, jokes, time, app control, and web search.
+        Google Speech API for recognition, pyttsx3 for offline speech output.
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">SpeechRecognition</span><span class="stack-tag">pyttsx3</span>
+        <span class="stack-tag">Wikipedia API</span><span class="stack-tag">OpenWeatherMap</span>
+        <span class="stack-tag">Python</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-tag">// 04 · Experience</div>
+  <h2 class="section-title">Work History</h2>
+  <p class="section-sub">Where I've applied and grown these skills.</p>
+  <div class="exp-list fade-in">
+
+    <div class="exp-card">
+      <div class="exp-logo">📄</div>
+      <div>
+        <div class="exp-meta">
+          <div class="exp-title">Data Scientist</div>
+          <span class="exp-period">Feb 2025 – Apr 2026</span>
+        </div>
+        <div class="exp-company">Docusign · Remote, USA</div>
+        <ul class="exp-points">
+          <li>Designed document ingestion pipeline: PDFs via S3, events streamed through Kafka MSK, semantic chunking into PostgreSQL and Pinecone (per-tenant namespaces)</li>
+          <li>Built hybrid retrieval layer — 70% dense + 30% BM25 via RRF, Cohere Rerank, Redis caching with separate TTLs for embeddings vs responses</li>
+          <li>Built LangGraph multi-agent system: Planner (DAG validation, few-shot prompting) + Analyst (parallel GPT-4 calls, Pydantic validation) with DynamoDB checkpointing</li>
+          <li>Experiment tracking in MLflow on S3, model versioning in SageMaker Registry, full LLM observability via LangSmith + CloudWatch</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-logo">🏦</div>
+      <div>
+        <div class="exp-meta">
+          <div class="exp-title">Associate Data Scientist</div>
+          <span class="exp-period">Aug 2022 – Nov 2023</span>
+        </div>
+        <div class="exp-company">DBS Bank · Hyderabad, India</div>
+        <ul class="exp-points">
+          <li>Built XGBoost fraud classifier on 1:200 imbalanced dataset — SMOTE oversampling, precision-recall threshold tuning for risk team's operational tolerance</li>
+          <li>Engineered features from raw transaction logs in PySpark: velocity counts, rolling averages, merchant category sequences, device consistency flags</li>
+          <li>SHAP TreeExplainer for per-prediction explanations to compliance and risk stakeholders</li>
+          <li>MLflow experiment tracking and SageMaker endpoint deployment</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="section-tag" style="text-align:center">// 05 · Contact</div>
+    <h2 class="section-title">Let's Connect</h2>
+    <p style="color:var(--muted); margin-top:0.5rem; font-size:0.97rem; line-height:1.7">
+      Open to Data Scientist, ML Engineer, and GenAI roles — full-time, contract, or C2C.
+      Based in Birmingham, AL. Open to remote and relocation.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:saichandrakirantejap@gmail.com" class="contact-card">
+        <span>✉️</span> saichandrakirantejap@gmail.com
+      </a>
+      <a href="https://linkedin.com/in/saichandrapodili" target="_blank" class="contact-card">
+        <span>💼</span> LinkedIn
+      </a>
+      <a href="https://github.com/saichandrakirantejap" target="_blank" class="contact-card">
+        <span>💻</span> GitHub
+      </a>
+      <a href="tel:2053821368" class="contact-card">
+        <span>📞</span> 205-382-1368
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built by Sai Chandra Kiran Teja Podili · 2026 · Birmingham, AL</p>
+</footer>
+
+<script>
+  // Fade in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Active nav link highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--accent2)' : '';
+    });
+  });
+</script>
+
+</body>
+</html>
